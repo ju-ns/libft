@@ -6,7 +6,7 @@
 /*   By: jnogueir <jnogueir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 14:13:09 by jnogueir          #+#    #+#             */
-/*   Updated: 2025/07/25 14:31:53 by jnogueir         ###   ########.fr       */
+/*   Updated: 2025/07/25 14:51:27 by jnogueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 #include <string.h>
 #include "libft.h"
 
-#define TEST(description, condition) do { \ 
+#define TEST(description, condition) do { \
 	if((!condition)) { \
 		printf("Test failed: %s\n", description); \
 		fail = 1; \
 	} \
 } while (0)
 
-#define ASSER_MEM_EQ(a, b, n, description) do { \
+#define ASSERT_MEM_EQ(a, b, n, description) do { \
 	if(memcmp((a), (b), (n)) != 0) { \
 		printf("Test failed: %s\n", description); \
 		fail = 1; \
@@ -40,7 +40,7 @@ int main (void)
 	ft_bzero(buf1, 10);
 	bzero(buf2, 10);
 
-	ASSER_MEM_EQ(buf1, buf2, 10, "ft_bzero deve zerar igual ao bzero");
+	ASSERT_MEM_EQ(buf1, buf2, 10, "ft_bzero deve zerar igual ao bzero");
 	return (fail);
 	
 	

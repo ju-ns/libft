@@ -6,13 +6,14 @@
 /*   By: jnogueir <jnogueir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 10:49:06 by jnogueir          #+#    #+#             */
-/*   Updated: 2025/07/25 14:18:27 by jnogueir         ###   ########.fr       */
+/*   Updated: 2025/07/25 14:49:17 by jnogueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+#include <stddef.h>
 
 //vericação de caracteres
 int	ft_isalpha(int c);
