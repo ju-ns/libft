@@ -1,4 +1,5 @@
 NAME = libft.a
+SRC = $(wildcard *.c)
 OBJ = $(SRC:.c=.o)
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
@@ -14,7 +15,8 @@ $(NAME):$(OBJ)
 
 test: all
 	@echo "Running automated tests..."
-	@cd test && ./test.sh
+	@./test/test.sh
+
 clean:
 	rm -rf $(OBJ)
 

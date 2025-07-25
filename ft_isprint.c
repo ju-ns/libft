@@ -6,13 +6,13 @@
 /*   By: jnogueir <jnogueir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 08:47:22 by jnogueir          #+#    #+#             */
-/*   Updated: 2025/07/25 08:56:21 by jnogueir         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:14:32 by jnogueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_isprint(int c)
 {
-	if (c >= 32 || c <= 126)
+	if (c >= 32 && c <= 126)
 		return (1);
 	else
 		return (0);
