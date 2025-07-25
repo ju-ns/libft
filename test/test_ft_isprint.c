@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_ft_isdigit.c                                  :+:      :+:    :+:   */
+/*   test_ft_isprint.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jnogueir <jnogueir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/25 09:24:00 by jnogueir          #+#    #+#             */
-/*   Updated: 2025/07/25 12:37:56 by jnogueir         ###   ########.fr       */
+/*   Created: 2025/07/25 13:19:36 by jnogueir          #+#    #+#             */
+/*   Updated: 2025/07/25 13:26:37 by jnogueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,29 @@
 	} \
 } while (0)
 
-int main (void)
-{
+int main (){
+
 	int fail = 0;
 
-	TEST(ft_isdigit('5'), 1, '5');
-	TEST(ft_isdigit('0'), 1, '0');
-	TEST(ft_isdigit('9'), 1, '9');
+	TEST(ft_isprint(32), 1, 32);
+	TEST(ft_isprint(126), 1, 126);
 
-	TEST(ft_isdigit('a'), 0, 'a');
-	TEST(ft_isdigit('z'), 0, 'z');
-	TEST(ft_isdigit('B'), 0, 'B');
+	TEST(ft_isprint(65), 1, 65);
+	TEST(ft_isprint(97), 1, 97);
+	TEST(ft_isprint(48), 1, 48);
+	TEST(ft_isprint(33), 1, 33);
 
-	TEST(ft_isdigit('!'), 0, '!');
-	TEST(ft_isdigit(' '), 0, ' ');
-	TEST(ft_isdigit('@'), 0, '@');
+	TEST(ft_isprint(31), 0, 31);
+	TEST(ft_isprint(10), 0, 10);
+	TEST(ft_isprint(0), 0, 0);
 
-	TEST(ft_isdigit(127), 0, 127);
-	TEST(ft_isdigit(-1), 0, -1);
+	TEST(ft_isprint(127), 0, 127);
+	TEST(ft_isprint(200), 0, 200);
+	TEST(ft_isprint(255), 0, 255);
 
-	TEST(ft_isdigit(48), 1, 48);
-	TEST(ft_isdigit(57), 1, 57);
+	TEST(ft_isprint(-1), 0, -1);
+	TEST(ft_isprint(-42), 0, -42);
+	TEST(ft_isprint(300), 0, 300);
 
 	return (fail);
 }
-

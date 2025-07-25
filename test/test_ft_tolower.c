@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_ft_isdigit.c                                  :+:      :+:    :+:   */
+/*   test_ft_tolower.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jnogueir <jnogueir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/25 09:24:00 by jnogueir          #+#    #+#             */
-/*   Updated: 2025/07/25 12:37:56 by jnogueir         ###   ########.fr       */
+/*   Created: 2025/07/25 13:28:52 by jnogueir          #+#    #+#             */
+/*   Updated: 2025/07/25 13:33:31 by jnogueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include <stdio.h>
+#include "libft.h"
 
 #define TEST(passed, expected, input) do { \
 	int result = (passed); \
@@ -21,28 +21,29 @@
 	} \
 } while (0)
 
-int main (void)
-{
+int main (){
+	
 	int fail = 0;
 
-	TEST(ft_isdigit('5'), 1, '5');
-	TEST(ft_isdigit('0'), 1, '0');
-	TEST(ft_isdigit('9'), 1, '9');
+	TEST(ft_tolower('A'), 'a', 'A');
+	TEST(ft_tolower('B'), 'b', 'B');
+	TEST(ft_tolower('Z'), 'z', 'Z');
 
-	TEST(ft_isdigit('a'), 0, 'a');
-	TEST(ft_isdigit('z'), 0, 'z');
-	TEST(ft_isdigit('B'), 0, 'B');
+	TEST(ft_tolower('a'), 'a', 'a');
+	TEST(ft_tolower('z'), 'z', 'z');
 
-	TEST(ft_isdigit('!'), 0, '!');
-	TEST(ft_isdigit(' '), 0, ' ');
-	TEST(ft_isdigit('@'), 0, '@');
+	TEST(ft_tolower('0'), '0', '0');
+	TEST(ft_tolower('9'), '9', '9');
 
-	TEST(ft_isdigit(127), 0, 127);
-	TEST(ft_isdigit(-1), 0, -1);
+	TEST(ft_tolower('@'), '@', '@');
+	TEST(ft_tolower('['), '[', '[');
+	TEST(ft_tolower('!'), '!', '!');
 
-	TEST(ft_isdigit(48), 1, 48);
-	TEST(ft_isdigit(57), 1, 57);
+	TEST(ft_tolower(0), 0, 0);
+	TEST(ft_tolower(127), 127, 127);
+
+	TEST(ft_tolower(-1), -1, -1);
+	TEST(ft_tolower(255), 255, 255);
 
 	return (fail);
 }
-
