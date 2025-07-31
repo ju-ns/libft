@@ -36,8 +36,8 @@ int main (void)
     char dst1[10];
     char dst2[10];
 
-    memove(dst1, src, 9);
-    ft_memove(dst2, src, 9);
+    memmove(dst1, src, 9);
+    ft_memmove(dst2, src, 9);
     ASSERT_MEM_EQ(dst1, dst2, 9, "ft_memove should copy 9 bytes correctly");
     
     return (fail);
