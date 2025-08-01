@@ -14,20 +14,31 @@
 #include <string.h>
 #include <stdio.h>
 
+
 #define TEST(description, condition) do { \
-    if(!(condition)) { \
-        printf("Test failed: %s\n", description); \
-        fail = 1; \
-    } \
-} while(0)
+	if (!(condition)) { \
+		printf("Test failed: %s\n", description); \
+		fail = 1; \
+	} \
+} while (0)
 
-int main() {
-    int fail = 0;
+int main(void) {
+	int fail = 0;
 
-    // TEST 2: String comum
-    TEST("\"42SãoPaulo\" should return 10",
-         ft_strlen("42SãoPaulo") == strlen("42SãoPaulo"));
-    
-    return (fail);
-    
+	// TEST 1: String vazia
+	TEST("ft_strlen(\"\") should return 0", ft_strlen("") == strlen(""));
+
+	// TEST 2: Um caractere
+	TEST("ft_strlen(\"a\") should return 1", ft_strlen("a") == strlen("a"));
+
+	// TEST 3: String comum
+	TEST("ft_strlen(\"hello\") should return 5", ft_strlen("hello") == strlen("hello"));
+
+	// TEST 4: Espaços e símbolos
+	TEST("ft_strlen(\"com espaços!\")", ft_strlen("com espaços!") == strlen("com espaços!"));
+
+	// TEST 5: String longa
+	TEST("ft_strlen(\"1234567890abcdefghij\")", ft_strlen("1234567890abcdefghij") == strlen("1234567890abcdefghij"));
+
+	return (fail);
 }
