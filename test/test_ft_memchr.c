@@ -74,6 +74,15 @@ int main(void)
 
     TEST("n = 0 must return NULL", ret1 == NULL && ret2 == NULL);
 
-    
+    //TEST 5 - Caracteres não ASCII (verifique que trata como unsigned char)
+
+    char str7[] = {1,2,128,255};
+    char str8[] = {1,2,128,255};
+
+    ret1 = memchr(str7, 128, 4);
+    ret2 = ft_memchr(str8, 128, 4);
+
+    TEST("Usigned char match (128)", ret1 == str7 + 2 && ret2 == str8 + 2);
+
     return (fail);
 }
