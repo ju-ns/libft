@@ -46,6 +46,34 @@ int main(void)
     void *ret2 = ft_memchr(var2, '2', 3);
 
     TEST("Expected: 2", ret1 != NULL && ret2 != NULL);
+
+    //TEST 2 - Não encontra o caractere 
+    char str1[] = "abcdef";
+    char str2[] = "abcdef";
+
+    ret1 = memchr(str1, 'x', 6);
+    ret2 = ft_memchr(str2, 'x', 6);
+
+    TEST("Char not found returns NULL", ret1 == NULL && ret2 == NULL);
+
+    //TEST 3 - Encontrar no final do range
+    char str3[] = "12345";
+    char str4[] = "12345";
+
+    ret1 = memchr(str3, '5', 5);
+    ret2 = ft_memchr(str4, '5', 5);
+
+    TEST("Char found at last position of range", ret1 == str3 + 4 && ret2 == str4 + 4);
+
+    //TEST 4 - n = 0, nada deve ser comparado
+    char str5[] = "hello";
+    char str6[] = "hello";
+
+    ret1 = memchr(str5, 'e', 0);
+    ret2 = ft_memchr(str6, 'e', 0);
+
+    TEST("n = 0 must return NULL", ret1 == NULL && ret2 == NULL);
+
     
     return (fail);
 }
