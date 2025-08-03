@@ -12,6 +12,15 @@
 
 int ft_atoi(const char *nptr)
 {
-    (void) nptr;
-    return 1;
+    int i;
+    int result;
+
+    i = 0;
+    result = 0;
+    while(nptr[i])
+    {
+        result = result * 10 + (nptr[i] - '0');
+        i++;
+    }
+    return (result);
 }
