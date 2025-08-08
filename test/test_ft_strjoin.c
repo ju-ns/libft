@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_ft_strjoin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jnogueir <jnogueir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 00:46:05 by marvin            #+#    #+#             */
-/*   Updated: 2025/08/04 00:46:05 by marvin           ###   ########.fr       */
+/*   Updated: 2025/08/05 14:31:22 by jnogueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,22 @@ int main() {
 	char *res7 = ft_strjoin("line1\n", "line2");
 	ASSERT_STR_EQ(res7, "line1\nline2", "ft_strjoin should handle newlines");
 	free(res7);
+	
+	// TEST 8: concatenação de strings muito longas
+	char long1[1001], long2[1001];
+	memset(long1, 'a', 1000);
+	memset(long2, 'b', 1000);
+	long1[1000] = '\0';
+	long2[1000] = '\0';
+	char *res8 = ft_strjoin(long1, long2);
+	TEST("ft_strjoin should handle very long strings", res8 != NULL && strlen(res8) == 2000);
+	free(res8);
+
+	// TEST 9: concatenação de strings iguais
+	char *res9 = ft_strjoin("same", "same");
+	ASSERT_STR_EQ(res9, "samesame", "ft_strjoin with identical strings");
+	free(res9);
+
 
     return (fail);
 }

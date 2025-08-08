@@ -46,5 +46,32 @@ int main (void) {
 	TEST(ft_isalpha(-1), 0, -1);
 	TEST(ft_isalpha(255), 0, 255);
 
+	// Testa todas as letras maiúsculas e minúsculas
+	for (int c = 'A'; c <= 'Z'; c++) {
+		TEST(ft_isalpha(c), 1, c);
+	}
+	for (int c = 'a'; c <= 'z'; c++) {
+		TEST(ft_isalpha(c), 1, c);
+	}
+
+	// Caracteres próximos ao alfabeto
+	TEST(ft_isalpha('^'), 0, '^');
+	TEST(ft_isalpha('`'), 0, '`');
+	TEST(ft_isalpha('{'), 0, '{');
+	TEST(ft_isalpha('|'), 0, '|');
+
+	// Caracteres de controle adicionais
+	TEST(ft_isalpha('\n'), 0, '\n');
+	TEST(ft_isalpha('\r'), 0, '\r');
+	TEST(ft_isalpha('\b'), 0, '\b');
+
+	// Valores extremos adicionais
+	TEST(ft_isalpha(-128), 0, -128);
+	TEST(ft_isalpha(256), 0, 256);
+
+	// Testa caractere nulo explicitamente
+	TEST(ft_isalpha('\0'), 0, '\0');
+
+
 	return (fail);
 }

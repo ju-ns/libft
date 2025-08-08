@@ -34,5 +34,30 @@ int main (void)
 	TEST(ft_isalnum(' '), 0, ' ');
 	TEST(ft_isalnum('9'), 1, '9');
 
+	// Testa todos os dígitos de '0' a '9'
+	for (char c = '0'; c <= '9'; c++) {
+		TEST(ft_isalnum(c), 1, c);
+	}
+
+	// Letras adicionais maiúsculas e minúsculas
+	TEST(ft_isalnum('M'), 1, 'M');
+	TEST(ft_isalnum('m'), 1, 'm');
+
+	// Caracteres próximos do alfanumérico
+	TEST(ft_isalnum('@'), 0, '@');
+	TEST(ft_isalnum('['), 0, '[');
+	TEST(ft_isalnum('`'), 0, '`');
+	TEST(ft_isalnum('{'), 0, '{');
+
+	// Caracteres especiais e limites
+	TEST(ft_isalnum('\0'), 0, '\0');
+	TEST(ft_isalnum('\t'), 0, '\t');
+	TEST(ft_isalnum('\r'), 0, '\r');
+
+	// Valores fora do intervalo ASCII imprimível (atenção: pode gerar warning)
+	TEST(ft_isalnum(-1), 0, -1);
+	TEST(ft_isalnum(128), 0, 128);
+
+
 	return (fail);
 }

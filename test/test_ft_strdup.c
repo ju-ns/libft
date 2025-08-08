@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_ft_strdup.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jnogueir <jnogueir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 20:23:07 by marvin            #+#    #+#             */
-/*   Updated: 2025/08/03 20:23:07 by marvin           ###   ########.fr       */
+/*   Updated: 2025/08/05 13:40:10 by jnogueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,31 @@ int main ()
     TEST("ft_strdup should not return NULL", ft5 != NULL);
     free(ft5);
 
+    // TEST 6: string com \0 no meio (simulado via array)
+    const char s6[] = {'A', 'B', '\0', 'C'};
+    char *ft6 = ft_strdup(s6);
+    TEST("ft_strdup should stop at first null terminator", ft6[0] == 'A' && ft6[1] == 'B' && ft6[2] == '\0');
+    TEST("ft_strdup copied string should be null terminated", ft6[strlen(ft6)] == '\0');
+    free(ft6);
 
+    // TEST 7: string com múltiplas linhas
+    const char *s7 = "Linha1\nLinha2\nLinha3";
+    char *ft7 = ft_strdup(s7);
+    ASSERT_STR_EQ(ft7, s7, "ft_strdup should handle multiline strings");
+    free(ft7);
+
+    // TEST 8: string literal const
+    const char *s8 = "constante";
+    char *ft8 = ft_strdup(s8);
+    ASSERT_STR_EQ(ft8, s8, "ft_strdup should duplicate const strings");
+    TEST("ft_strdup should return new pointer for const string", ft8 != s8);
+    free(ft8);
+
+    // TEST 9: comparar tamanho da string duplicada
+    const char *s9 = "tamanho";
+    char *ft9 = ft_strdup(s9);
+    TEST("ft_strdup copied string should have same length", strlen(ft9) == strlen(s9));
+    free(ft9);
 
     return (fail);
 }

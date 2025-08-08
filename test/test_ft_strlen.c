@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_ft_strlen.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jnogueir <jnogueir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 02:07:26 by marvin            #+#    #+#             */
-/*   Updated: 2025/08/01 02:07:26 by marvin           ###   ########.fr       */
+/*   Updated: 2025/08/05 13:48:35 by jnogueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,14 @@ int main(void) {
 
 	// TEST 5: String longa
 	TEST("ft_strlen(\"1234567890abcdefghij\")", ft_strlen("1234567890abcdefghij") == strlen("1234567890abcdefghij"));
+
+	// TEST 6: String com caracteres UTF-8 multibyte (emojis, acentos)
+	const char *utf8_str = "Olá 😊";
+	TEST("ft_strlen conta bytes, não caracteres", ft_strlen(utf8_str) == strlen(utf8_str));
+
+	// TEST 7: String com \0 no meio - strlen para na primeira ocorrência do nulo
+	char str_with_null[] = {'a','b','\0','c','d','\0'};
+	TEST("ft_strlen para no primeiro \\0", ft_strlen(str_with_null) == strlen(str_with_null));
 
 	return (fail);
 }

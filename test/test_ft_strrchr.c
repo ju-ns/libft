@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_ft_strrchr.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jnogueir <jnogueir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 18:52:50 by marvin            #+#    #+#             */
-/*   Updated: 2025/08/02 18:52:50 by marvin           ###   ########.fr       */
+/*   Updated: 2025/08/05 14:53:28 by jnogueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,36 @@ int main (){
     char *ret_ft6 = ft_strrchr(str6, 'f');
 
     TEST("ft_strrchr should return 'f'", ret_std6 == ret_ft6);
+
+    // TEST 8: caractere único no meio da string
+    const char *str7 = "hello";
+    char *ret_std7 = strrchr(str7, 'l');
+    char *ret_ft7 = ft_strrchr(str7, 'l');
+    TEST("ft_strrchr should return last 'l' in 'hello'", ret_std7 == ret_ft7);
+
+    // TEST 9: caractere símbolo especial
+    const char *str8 = "[]][[";
+    char *ret_std8 = strrchr(str8, '[');
+    char *ret_ft8 = ft_strrchr(str8, '[');
+    TEST("ft_strrchr should return last '[' in '[]][['", ret_std8 == ret_ft8);
+
+    // TEST 10: string com um caractere, buscado presente
+    const char *str9 = "a";
+    char *ret_std9 = strrchr(str9, 'a');
+    char *ret_ft9 = ft_strrchr(str9, 'a');
+    TEST("ft_strrchr single char string with matching char", ret_std9 == ret_ft9);
+
+    // TEST 11: string com um caractere, buscado ausente
+    const char *str10 = "a";
+    char *ret_std10 = strrchr(str10, 'b');
+    char *ret_ft10 = ft_strrchr(str10, 'b');
+    TEST("ft_strrchr single char string with non-matching char", ret_std10 == ret_ft10);
+
+    // TEST 12: busca por '\0' em string longa
+    const char *str11 = "long string test\0hidden";
+    char *ret_std11 = strrchr(str11, '\0');
+    char *ret_ft11 = ft_strrchr(str11, '\0');
+    TEST("ft_strrchr should return pointer to terminator '\\0' in long string", ret_std11 == ret_ft11);
+
     return (fail);
 }

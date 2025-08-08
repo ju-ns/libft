@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_ft_strlcat.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jnogueir <jnogueir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 15:55:44 by marvin            #+#    #+#             */
-/*   Updated: 2025/08/02 15:55:44 by marvin           ###   ########.fr       */
+/*   Updated: 2025/08/05 16:11:14 by jnogueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,36 @@
 		fail = 1; \
 	} \
 } while (0)
+
+static size_t strlcat(char *dst, const char *src, size_t dstsize)
+{
+    size_t	dlen = 0;
+	size_t	slen = 0;
+	size_t	i = 0;
+
+	if (!dst || !src)
+		return (0);
+
+	// Calcula comprimento de dst e src
+	while (dst[dlen] && dlen < dstsize)
+		dlen++;
+	while (src[slen])
+		slen++;
+
+	// Se dlen já passou do limite, não copia nada
+	if (dlen == dstsize)
+		return (dstsize + slen);
+
+	// Copia src no final de dst até preencher o espaço
+	while (src[i] && (dlen + i + 1) < dstsize)
+	{
+		dst[dlen + i] = src[i];
+		i++;
+	}
+
+	dst[dlen + i] = '\0';
+	return (dlen + slen);
+}
 
 int main (){
 
@@ -85,6 +115,28 @@ int main (){
 
     ASSERT_STR_EQ(dst1e, dst2e, "strlcat should copy all if dst is empty and buffer is big");
     TEST("strlcat return value should be strlen(src)", ret_std_e == ret_ft_e);
+
+    // TEST 6: buffer exatamente do tamanho necessário
+    char dst9[11] = "12345";
+    char dst10[11] = "12345";
+    const char *src5 = "6789";
+
+    size_t ret_std_f = strlcat(dst9, src5, sizeof(dst9)); // buffer 11 bytes (5+4+1)
+    size_t ret_ft_f = ft_strlcat(dst10, src5, sizeof(dst10));
+
+    ASSERT_STR_EQ(dst9, dst10, "strlcat with exact buffer size");
+    TEST("strlcat returns total length (dst + src)", ret_std_f == ret_ft_f);
+
+    // TEST 7: buffer menor que strlen(dst)
+    char dst11[5] = "1234"; // no room to concat
+    char dst12[5] = "1234";
+    const char *src6 = "abc";
+
+    size_t ret_std_g = strlcat(dst11, src6, sizeof(dst11));
+    size_t ret_ft_g = ft_strlcat(dst12, src6, sizeof(dst12));
+
+    ASSERT_STR_EQ(dst11, dst12, "strlcat does not modify dst if size < strlen(dst)");
+    TEST("strlcat returns size + strlen(src) if size < strlen(dst)", ret_std_g == ret_ft_g);
 
     return (fail);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_ft_strncmp.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jnogueir <jnogueir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 13:07:38 by marvin            #+#    #+#             */
-/*   Updated: 2025/08/03 13:07:38 by marvin           ###   ########.fr       */
+/*   Updated: 2025/08/05 13:51:04 by jnogueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,43 @@ int main ()
     int ft6  = ft_strncmp(a6, b6, 6);
     TEST("strncmp should treat shorter string with null terminator", std6 == ft6);
 
+    // TEST 7: string vazia vs string não vazia
+    const char *empty = "";
+    const char *nonempty = "abc";
+    TEST("strncmp empty vs non-empty", ft_strncmp(empty, nonempty, 3) == strncmp(empty, nonempty, 3));
+    TEST("strncmp non-empty vs empty", ft_strncmp(nonempty, empty, 3) == strncmp(nonempty, empty, 3));
 
+    // TEST 8: caracteres especiais / acentuação
+    const char *spec1 = "ábc";
+    const char *spec2 = "abc";
+    TEST("strncmp com caracteres acentuados", ft_strncmp(spec1, spec2, 3) == strncmp(spec1, spec2, 3));
+
+    // TEST 9: caracteres negativos (signed char)
+    const char str_neg1[] = { (char)200, 'a', '\0' };
+    const char str_neg2[] = { (char)150, 'a', '\0' };
+    TEST("strncmp com caracteres negativos", ft_strncmp(str_neg1, str_neg2, 2) == strncmp(str_neg1, str_neg2, 2));
+
+    // TEST 10: comparação com n maior que comprimento das strings
+    const char *short1 = "abc";
+    const char *short2 = "abcd";
+    TEST("strncmp com n maior que comprimento", ft_strncmp(short1, short2, 10) == strncmp(short1, short2, 10));
+
+    // TEST 11: strings muito longas
+    size_t big_len = 1000;
+    char big_str1[1001];
+    char big_str2[1001];
+    for (size_t i = 0; i < big_len; i++) {
+        big_str1[i] = 'a';
+        big_str2[i] = 'a';
+    }
+    big_str1[big_len] = '\0';
+    big_str2[big_len] = '\0';
+    TEST("strncmp com strings longas iguais", ft_strncmp(big_str1, big_str2, big_len) == 0);
+
+    // Altera último caractere para diferença
+    big_str2[big_len-1] = 'b';
+    TEST("strncmp com strings longas diferentes no fim", ft_strncmp(big_str1, big_str2, big_len) == strncmp(big_str1, big_str2, big_len));
+    
 
     return (fail);
 }

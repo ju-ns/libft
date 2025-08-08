@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_ft_strtrim.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jnogueir <jnogueir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 01:08:13 by marvin            #+#    #+#             */
-/*   Updated: 2025/08/04 01:08:13 by marvin           ###   ########.fr       */
+/*   Updated: 2025/08/05 15:54:41 by jnogueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,36 @@ int main() {
 	char *res7 = ft_strtrim("*~hello~*", "*~");
 	ASSERT_STR_EQ(res7, "hello", "ft_strtrim deve remover qualquer caractere do set nas pontas");
 	free(res7);
+
+	// TEST 8: caracteres do set só no início
+	char *res8 = ft_strtrim("!!hello", "!");
+	ASSERT_STR_EQ(res8, "hello", "ft_strtrim deve remover caracteres do set só no início");
+	free(res8);
+
+	// TEST 9: caracteres do set só no fim
+	char *res9 = ft_strtrim("hello!!", "!");
+	ASSERT_STR_EQ(res9, "hello", "ft_strtrim deve remover caracteres do set só no fim");
+	free(res9);
+
+	// TEST 10: set com caracteres repetidos
+	char *res10 = ft_strtrim("!!@@hello@@!!", "!@");
+	ASSERT_STR_EQ(res10, "hello", "ft_strtrim deve funcionar corretamente com set repetido");
+	free(res10);
+
+	// TESTE 11: set com apenas '!' — deve remover os '!' mas nenhum outro caractere
+	char *res11 = ft_strtrim("!hello!", "!");
+	ASSERT_STR_EQ(res11, "hello", "ft_strtrim deve remover '!' mas ignorar outros caracteres");
+	free(res11);
+
+	// TEST 12: string e set iguais
+	char *res12 = ft_strtrim("abc", "abc");
+	ASSERT_STR_EQ(res12, "", "ft_strtrim com string igual ao set deve retornar string vazia");
+	free(res12);
+
+	// TEST 13: caracteres do set no meio da string — não remover
+	char *res13 = ft_strtrim("a!b!c", "!");
+	ASSERT_STR_EQ(res13, "a!b!c", "ft_strtrim não deve remover caracteres do set no meio da string");
+	free(res13);
 
 	return fail;
 }

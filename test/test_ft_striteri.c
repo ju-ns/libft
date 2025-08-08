@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_ft_striteri.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jnogueir <jnogueir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 22:00:00 by marvin            #+#    #+#             */
-/*   Updated: 2025/08/04 22:00:00 by marvin           ###   ########.fr       */
+/*   Updated: 2025/08/05 14:29:28 by jnogueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,13 @@ static void add_index_iteri(unsigned int i, char *c)
 {
 	*c += i;
 }
+static void only_even_indices(unsigned int i, char *c) {
+	if (i % 2 == 0)
+	{
+		*c = '*';
+	}
+}
+
 
 int main(void)
 {
@@ -69,6 +76,21 @@ int main(void)
 	char str5[] = "abc";
 	ft_striteri(str5, NULL);
 	TEST("ft_striteri com função NULL não deve crashar", 1);
+
+	// TESTE 6: string com caracteres não alfabéticos
+	char str6[] = "123!@#abc";
+	ft_striteri(str6, to_upper_iteri); // Apenas 'a', 'b', 'c' devem mudar
+	ASSERT_STR_EQ(str6, "123!@#ABC", "ft_striteri ignora não letras");
+
+	// TESTE 7: string de um caractere
+	char str7[] = "z";
+	ft_striteri(str7, to_upper_iteri);
+	ASSERT_STR_EQ(str7, "Z", "ft_striteri em string de um caractere");
+
+	// TESTE 8: modifica apenas índices pares
+	char str8[] = "abcdef";
+	ft_striteri(str8, only_even_indices);  // Esperado: "*b*d*f"
+	ASSERT_STR_EQ(str8, "*b*d*f", "ft_striteri modifica apenas índices pares");
 
 	return (fail);
 }

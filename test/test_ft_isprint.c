@@ -12,6 +12,7 @@
 
 #include "libft.h"
 #include <stdio.h>
+#include <limits.h>
 
 #define TEST(passed, expected, input) do { \
 	int result = (passed); \
@@ -44,6 +45,21 @@ int main (){
 	TEST(ft_isprint(-1), 0, -1);
 	TEST(ft_isprint(-42), 0, -42);
 	TEST(ft_isprint(300), 0, 300);
+
+	// Testa toda a faixa imprimível
+	for (int c = 32; c <= 126; c++) {
+		TEST(ft_isprint(c), 1, c);
+	}
+
+	// Caracteres de controle adicionais
+	TEST(ft_isprint('\r'), 0, '\r');
+	TEST(ft_isprint('\t'), 0, '\t');
+	TEST(ft_isprint('\b'), 0, '\b');
+
+	// Valores extremos
+	TEST(ft_isprint(INT_MIN), 0, INT_MIN);
+	TEST(ft_isprint(INT_MAX), 0, INT_MAX);
+
 
 	return (fail);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_ft_memmove.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jnogueir <jnogueir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 20:47:48 by marvin            #+#    #+#             */
-/*   Updated: 2025/07/30 20:47:48 by marvin           ###   ########.fr       */
+/*   Updated: 2025/08/05 13:19:57 by jnogueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,41 @@ int main (void)
     ft_memmove(buffer2 + 4, buffer2, 10);
 
     ASSERT_MEM_EQ(buffer1, buffer2, 10, "Expected result: ABCDABCDEF");
+
+    // TEST 5 - Sobreposição pequena, dest = src + 1
+    char buf1[] = "123456789";
+    char buf2[] = "123456789";
+
+    memmove(buf1 + 1, buf1, 8);
+    ft_memmove(buf2 + 1, buf2, 8);
+    ASSERT_MEM_EQ(buf1, buf2, 9, "Overlap: dest = src + 1");
+
+    // TEST 6 - Cópia com bytes nulos no meio
+    char src_null[] = {'A', 0, 'B', 0, 'C'};
+    char dst_std[5];
+    char dst_ft[5];
+
+    memmove(dst_std, src_null, 5);
+    ft_memmove(dst_ft, src_null, 5);
+    ASSERT_MEM_EQ(dst_std, dst_ft, 5, "Copy with null bytes");
+
+    // TEST 7 - Copiar 1 byte com sobreposição
+    char small1[] = "AB";
+    char small2[] = "AB";
+
+    memmove(small1 + 1, small1, 1);
+    ft_memmove(small2 + 1, small2, 1);
+    ASSERT_MEM_EQ(small1, small2, 2, "Overlap copy of 1 byte");
+
+    // TEST 8 - Verificar retorno da função
+    char ret_src[] = "ReturnTest";
+    char ret_dst[20];
+
+    void *ret_std_ptr = memmove(ret_dst, ret_src, 10);
+    void *ret_ft_ptr = ft_memmove(ret_dst, ret_src, 10);
+
+    TEST("ft_memmove returns destination pointer", ret_ft_ptr == ret_dst);
+    TEST("memmove returns destination pointer", ret_std_ptr == ret_dst);
 
     return (fail);
 }

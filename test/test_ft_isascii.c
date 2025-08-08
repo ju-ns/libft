@@ -12,6 +12,8 @@
 
 #include "libft.h"
 #include "stdio.h"
+#include <limits.h>
+
 #define TEST(passed, expected, input) do { \
 	int result = (passed); \
 	if(result != (expected)) { \
@@ -36,6 +38,20 @@ int main (){
 	TEST(ft_isascii(128), 0, 128);
 	TEST(ft_isascii(255), 0, 255);
 	TEST(ft_isascii(300), 0, 300);
+
+	// Testa toda a faixa ASCII 0-127
+	for (int i = 0; i <= 127; i++) {
+		TEST(ft_isascii(i), 1, i);
+	}
+
+	// Testes perto das bordas
+	TEST(ft_isascii(-129), 0, -129);
+	TEST(ft_isascii(129), 0, 129);
+
+	// Testes extremos com INT_MIN e INT_MAX
+	TEST(ft_isascii(INT_MIN), 0, INT_MIN);
+	TEST(ft_isascii(INT_MAX), 0, INT_MAX);
+
 
 	return (fail);
 

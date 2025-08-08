@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_ft_strnstr.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jnogueir <jnogueir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 14:44:40 by marvin            #+#    #+#             */
-/*   Updated: 2025/08/03 14:44:40 by marvin           ###   ########.fr       */
+/*   Updated: 2025/08/05 13:55:47 by jnogueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,42 @@ int main()
     char *ref6 = my_strnstr(h6, n6, 0);
     char *res6 = ft_strnstr(h6, n6, 0);
     TEST("len = 0 — should return NULL unless needle is empty", ref6 == res6);
+
+    // TEST 7: needle no final exato dentro do limite
+    const char *h7 = "abcde";
+    const char *n7 = "de";
+    TEST("needle at end inside len", ft_strnstr(h7, n7, 5) == my_strnstr(h7, n7, 5));
+
+    // TEST 8: needle parcialmente fora do limite len
+    const char *h8 = "abcde";
+    const char *n8 = "def";
+    TEST("needle partial outside len should return NULL", ft_strnstr(h8, n8, 5) == my_strnstr(h8, n8, 5));
+
+    // TEST 9: needle igual ao haystack
+    const char *h9 = "fullmatch";
+    const char *n9 = "fullmatch";
+    TEST("needle equals haystack", ft_strnstr(h9, n9, strlen(h9)) == my_strnstr(h9, n9, strlen(h9)));
+
+    // TEST 10: needle ocorre várias vezes, deve retornar primeiro
+    const char *h10 = "abababc";
+    const char *n10 = "ab";
+    TEST("needle occurs multiple times returns first occurrence", ft_strnstr(h10, n10, strlen(h10)) == my_strnstr(h10, n10, strlen(h10)));
+
+    // TEST 11: caracteres especiais e espaços
+    const char *h11 = "a b\nc\td";
+    const char *n11 = "b\nc";
+    TEST("needle with spaces and special chars", ft_strnstr(h11, n11, strlen(h11)) == my_strnstr(h11, n11, strlen(h11)));
+
+    // TEST 12: haystack vazio e needle não vazia
+    const char *h12 = "";
+    const char *n12 = "a";
+    TEST("empty haystack with non-empty needle should return NULL", ft_strnstr(h12, n12, 10) == my_strnstr(h12, n12, 10));
+
+    // TEST 13: ambos vazios
+    const char *h13 = "";
+    const char *n13 = "";
+    TEST("both haystack and needle empty should return haystack", ft_strnstr(h13, n13, 0) == my_strnstr(h13, n13, 0));
+
 
     return (fail);
 

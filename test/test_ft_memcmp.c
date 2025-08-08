@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_ft_memcmp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jnogueir <jnogueir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 01:34:49 by marvin            #+#    #+#             */
-/*   Updated: 2025/08/01 01:34:49 by marvin           ###   ########.fr       */
+/*   Updated: 2025/08/05 13:16:46 by jnogueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,38 @@ int main (){
     ret_ft = ft_memcmp(str9, str10, 3);
     TEST("memcmp with difference in first byte", 
         (ret_std < 0 && ret_ft < 0) || (ret_std > 0 && ret_ft > 0));
+    
+     // TEST 6: Diferença com byte > 127
+    char high1[] = {10, 20, (char)200, 40};
+    char high2[] = {10, 20, (char)199, 40};
+    ret_std = memcmp(high1, high2, 4);
+    ret_ft = ft_memcmp(high1, high2, 4);
+    TEST("memcmp with high unsigned char values",
+         (ret_std > 0 && ret_ft > 0) || (ret_std < 0 && ret_ft < 0));
+
+    // TEST 7: Comparação com byte nulo no meio
+    char nul1[] = {1, 2, 0, 4};
+    char nul2[] = {1, 2, 0, 5};
+    ret_std = memcmp(nul1, nul2, 4);
+    ret_ft = ft_memcmp(nul1, nul2, 4);
+    TEST("memcmp with null byte in middle",
+         (ret_std < 0 && ret_ft < 0) || (ret_std > 0 && ret_ft > 0));
+
+    // TEST 8: Comparar buffers de tamanhos diferentes (compare menor tamanho)
+    char diff_size1[] = "Hello";
+    char diff_size2[] = "Hellp";
+    ret_std = memcmp(diff_size1, diff_size2, 4); // compara só 'Hell'
+    ret_ft = ft_memcmp(diff_size1, diff_size2, 4);
+    TEST("memcmp with partial buffer comparison", ret_std == ret_ft);
+
+    // TEST 9: Bytes negativos
+    char neg1[] = { -1, 2, 3 };
+    char neg2[] = { -2, 2, 3 };
+    ret_std = memcmp(neg1, neg2, 3);
+    ret_ft = ft_memcmp(neg1, neg2, 3);
+    TEST("memcmp with negative bytes",
+         (ret_std > 0 && ret_ft > 0) || (ret_std < 0 && ret_ft < 0));
+
     return (fail);
 
 }

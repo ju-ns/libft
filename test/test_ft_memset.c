@@ -1,17 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test_ft_memset.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jnogueir <jnogueir@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/05 13:20:18 by jnogueir          #+#    #+#             */
+/*   Updated: 2025/08/05 13:20:18 by jnogueir         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include "libft.h"
 #include <string.h>
 
 
 #define TEST(description, condition) do {\
-	if ((!condition)) { \
+	if ((!(condition))) { \
 		printf("Test failed: %s\n ", description); \
 		fail = 1; \
 	}\
 }while(0)
 
 #define ASSERT_MEM_EQ(a, b, n, description) do { \
-	if(memcmp((a), (b), (n) != 0)) {\
+	if(memcmp((a), (b), (n)) != 0) {\
 		printf("Test failed: %s\n ", description); \
 		fail = 1; \
 	}\
@@ -32,7 +44,7 @@ int main (){
 	//TEST1 - Comportamento básico
 	memset(buffer1, 'X', 4);
 	ft_memset(buffer2, 'X', 4);
-	ASSERT_MEM_EQ(buffer1, buffer2, 10, "ft_memset should fill with 'X' correctly");
+	ASSERT_MEM_EQ(buffer1, buffer2, 4, "ft_memset should fill with 'X' correctly");
 
 	//TEST2 - Len parcial
 	memset(buffer1, 'B', 5);
@@ -46,7 +58,7 @@ int main (){
 	size_t len = 0;
 	ft_memset(buffer1, 'X', len);
 	memset(buffer2, 'X', len);
-	ASSERT_MEM_EQ(buffer1, buffer2, len, "ft_memset with len = 0 should not change");
+	ASSERT_MEM_EQ(buffer1, buffer2, 10, "ft_memset with len = 0 should not change");
 
 	//TEST4 - informa o ponto de partida
 	memset(buffer1 + 2, 'X', 2);
@@ -62,17 +74,41 @@ int main (){
 
 	ASSERT_MEM_EQ(buffer1, buffer2, 10, "ft_memset must overwrite only the first 3 bytes");
 
-	//TEST6 - ponteiro NULL com n > 0
-	char *ptr = NULL;
-	void *ret_null = ft_memset(ptr, 'X', 0);
+	// TEST6 - caractere negativo (ex: -1 = 0xFF)
+	memset(buffer1, 0, 10);
+	ft_memset(buffer2, 0, 10);
 
-	ASSERT_TRUE(ret_null == ptr, "ft_memset(NULL, 'X', 0) must return the original pointer");
+	ft_memset(buffer1, -1, 10);
+	memset(buffer2, -1, 10);
+	ASSERT_MEM_EQ(buffer1, buffer2, 10, "ft_memset with negative char value (0xFF)");
 
 	//TEST7 - retorno da função 
 	char data[5];
 	void *ret = ft_memset(data, 'Z', 5);
 
 	ASSERT_TRUE(ret == data, "ft_memset must return the original pointer");
+
+	// TEST8 - Preencher buffer maior parcialmente
+	char bigbuf1[20], bigbuf2[20];
+	memset(bigbuf1, 'A', 20);
+	ft_memset(bigbuf2, 'A', 20);
+	ft_memset(bigbuf1, 'Z', 15);
+	memset(bigbuf2, 'Z', 15);
+	ASSERT_MEM_EQ(bigbuf1, bigbuf2, 20, "Partial fill of 15 bytes in 20 byte buffer");
+
+	// TEST9 - Preencher buffer com zero
+	char zero1[10], zero2[10];
+	memset(zero1, 'X', 10);
+	ft_memset(zero2, 'X', 10);
+	ft_memset(zero1, 0, 10);
+	memset(zero2, 0, 10);
+	ASSERT_MEM_EQ(zero1, zero2, 10, "Fill buffer with zero bytes");
+
+	// TEST10 - Retorno do ponteiro sempre correto
+	char retbuf[5];
+	char *r1 = ft_memset(retbuf, 'Q', 5);
+	char *r2 = ft_memset(retbuf, 'W', 0);
+	TEST("ft_memset returns correct pointer", r1 == retbuf && r2 == retbuf);
 
 
 	return (fail);

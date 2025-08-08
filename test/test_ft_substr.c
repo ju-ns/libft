@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_ft_substr.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jnogueir <jnogueir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 23:54:16 by marvin            #+#    #+#             */
-/*   Updated: 2025/08/03 23:54:16 by marvin           ###   ########.fr       */
+/*   Updated: 2025/08/05 13:55:13 by jnogueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,29 @@ int main(void)
     ASSERT_STR_EQ(sub5, "complete", "ft_substr should return full copy if len = strlen");
     TEST("ft_substr should not return same pointer", sub5 != src5);
     free(sub5);
+
+    // TEST 6: src vazia
+    const char *src6 = "";
+    char *sub6 = ft_substr(src6, 0, 5);
+    ASSERT_STR_EQ(sub6, "", "ft_substr with empty src should return empty string");
+    free(sub6);
+
+    // TEST 7: start == strlen(src)
+    const char *src7 = "libft";
+    char *sub7 = ft_substr(src7, ft_strlen(src7), 3);
+    ASSERT_STR_EQ(sub7, "", "ft_substr with start == strlen(src) should return empty string");
+    free(sub7);
+
+    // TEST 8: len muito grande, start == 0
+    const char *src8 = "teststring";
+    char *sub8 = ft_substr(src8, 0, 1000);
+    ASSERT_STR_EQ(sub8, "teststring", "ft_substr with large len and start 0 should return full string");
+    free(sub8);
+
+    // TEST 9: len == tamanho da string, start > 0
+    const char *src9 = "teststring";
+    char *sub9 = ft_substr(src9, 4, ft_strlen(src9));
+    ASSERT_STR_EQ(sub9, "string", "ft_substr with len > remaining length should return till end");
+    free(sub9);
 	return (fail);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_ft_memcpy.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jnogueir <jnogueir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 18:52:44 by marvin            #+#    #+#             */
-/*   Updated: 2025/07/30 18:52:44 by marvin           ###   ########.fr       */
+/*   Updated: 2025/08/05 13:18:31 by jnogueir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,23 @@ int main (void){
     void *ret2 = ft_memcpy(ptr1, ptr2, 0);
 
     ASSERT_TRUE(ret1 == ret2, "ft_memcpy(NULL, NULL, 0) returns same as memcpy");
+
+    // TEST 6 - Verifica se ft_memcpy retorna o ponteiro destino
+    char source[] = "TestData";
+    char destination[20];
+    void *ret_std = memcpy(destination, source, 8);
+    void *ret_ft = ft_memcpy(destination, source, 8);
+    TEST("ft_memcpy returns destination pointer", ret_ft == destination);
+    TEST("memcpy returns destination pointer", ret_std == destination);
+
+    // TEST 7 - Sobreposição parcial (comportamento indefinido, mas verifica consistência)
+    char overlap[] = "123456789";
+    char *dst_overlap = overlap + 2;
+    char *src_overlap = overlap;
+
+    memcpy(dst_overlap, src_overlap, 5);  // pode causar comportamento indefinido
+    ft_memcpy(dst_overlap, src_overlap, 5);
+    ASSERT_MEM_EQ(overlap, overlap, 9, "overlap copy: behavior undefined, test consistency");
 
 
     return (fail);
